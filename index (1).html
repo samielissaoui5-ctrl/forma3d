@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1d2140">
+<title>FORMA 3D Lab — Objects with personality</title>
+<meta name="description" content="Thoughtfully designed 3D-printed pieces, made to order in Dubai.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#182039;--muted:#6f778d;--line:#e6e5ed;--bg:#f7f7fb;--violet:#7055e9;--violetD:#5c42d9;--dark:#1d2140;--soft:#f0edff}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.6 'DM Sans',system-ui,sans-serif}
+body.locked{overflow:hidden}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}
+button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid #baaaff;outline-offset:2px}
+.hide{display:none!important}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}
+.topbar{background:var(--dark);color:#e9e6f7;text-align:center;padding:8px 12px;font-size:12px;font-weight:700;letter-spacing:.06em}
+.nav{position:sticky;top:0;z-index:30;background:#fffffff2;backdrop-filter:blur(8px);border-bottom:1px solid #eceaf2}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:62px}
+.brand{font:800 22px Outfit,sans-serif;letter-spacing:-1px;white-space:nowrap}.brand i{font-style:normal;color:var(--violet)}
+.links{display:none;gap:26px;font-size:14px;font-weight:700;color:#5f6478}.links a:hover{color:var(--violet)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:13px 18px;font-weight:700;font-size:15px;line-height:1.2;text-align:center}
+.primary{background:var(--violet);color:#fff}.primary:hover{background:var(--violetD)}
+.dark{background:var(--dark);color:#fff}.outline{background:#fff;border:1px solid var(--line);color:var(--ink)}
+.soft{background:var(--soft);color:var(--violetD)}.danger{background:#fff;border:1px solid #f1c9c9;color:#b3261e}
+.sm{padding:9px 13px;font-size:13px;border-radius:10px}.block{width:100%}
+.count{background:#ffbf6b;color:#30200c;border-radius:20px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px;padding:0 6px}
+.eyebrow{color:var(--violet);letter-spacing:.14em;text-transform:uppercase;font-size:12px;font-weight:800}
+.muted{color:var(--muted)}
+/* hero */
+.hero{padding:34px 0 40px;background:linear-gradient(127deg,#f7f5ff,#fbf8f3 60%,#eef0fd)}
+.heroGrid{display:grid;gap:28px;align-items:center}
+.hero h1{font-size:clamp(40px,10vw,70px);letter-spacing:-2px;margin:14px 0 16px}.hero h1 em{font-style:normal;color:var(--violet)}
+.hero p{color:#626881;margin:0 0 22px;max-width:480px}
+.heroBtns{display:flex;gap:10px;flex-wrap:wrap}
+.heroArt{border-radius:28px;background:linear-gradient(130deg,#d4c9fa,#b8aff0 62%,#e1cdeb);display:grid;place-items:center;padding:26px 10px;box-shadow:0 20px 40px #8c80be30}
+.heroArt svg{width:min(300px,72vw);height:auto;filter:drop-shadow(0 24px 18px #4b3c9a40)}
+/* sections */
+section{padding:46px 0}
+.head{margin-bottom:20px}.head h2{font-size:clamp(28px,6vw,40px);letter-spacing:-1px;margin:6px 0}.head p{margin:0;color:var(--muted)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:none}
+.chip{flex:none;border:1px solid #e4e1ec;background:#fff;border-radius:99px;padding:8px 15px;color:#5f6478;font-weight:700;font-size:14px}
+.chip.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#fff;border:1px solid #eeeef2;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 3px 12px #1e1b410d}
+.pimg{aspect-ratio:1;background:linear-gradient(140deg,#e5e0fc,#f1e5ed);display:grid;place-items:center;position:relative;overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover}.pimg span.emo{font-size:64px}
+.badge{position:absolute;top:10px;left:10px;background:#fff;border-radius:30px;font-size:11px;font-weight:800;padding:5px 10px}
+.pbody{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.pbody h3{font-size:17px}.pbody p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.price{font:800 18px Outfit,sans-serif;margin-top:auto}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 10px;background:#fff;border-radius:18px;border:1px dashed var(--line)}
+.steps{display:grid;gap:12px}
+.step{background:#fff;border-radius:18px;padding:20px;display:flex;gap:14px;align-items:flex-start;border:1px solid #eeeef2}
+.step b{font:800 18px Outfit,sans-serif;display:block;margin-bottom:2px}.step p{margin:0;font-size:14px;color:var(--muted)}
+.num{flex:none;width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--violet);display:grid;place-items:center;font:800 18px Outfit,sans-serif}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px}
+.two{display:grid;gap:16px}
+.quote{background:#f8f7fc;border-radius:14px;padding:14px 16px;margin-bottom:10px}.quote p{margin:4px 0}.stars{color:#e3a542;letter-spacing:2px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:13px;font-weight:800;color:#535c73}
+.field small{color:var(--muted);font-size:12px;line-height:1.5}
+.input{width:100%;min-height:46px;border:1px solid #dbdce7;border-radius:12px;background:#fff;padding:11px 13px;color:var(--ink);font-size:16px}
+textarea.input{min-height:96px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.footer{background:#1b203b;color:#fff;padding:36px 0 calc(26px + env(safe-area-inset-bottom))}
+.footer p,.footer a{color:#babdd3;font-size:14px}.footer a{display:inline-block;margin-right:16px}
+.footer .studio{opacity:.55;font-size:12px}
+/* cart */
+.shade{position:fixed;inset:0;background:#10152a9c;z-index:60;display:none}.shade.open{display:block}
+.drawer{position:fixed;top:0;right:0;height:100%;height:100dvh;width:min(440px,100%);background:#fff;z-index:61;transform:translateX(105%);transition:transform .25s;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.dhead{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line)}
+.dbody{flex:1;overflow:auto;padding:4px 18px 24px}
+.x{border:0;background:#f3f1f9;border-radius:10px;width:40px;height:40px;font-size:18px}
+.line{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.thumb{flex:none;width:58px;height:58px;border-radius:12px;background:#eeeaff;display:grid;place-items:center;font-size:28px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:10px;margin-top:4px}
+.qty button{border:0;background:none;width:34px;height:32px;font-size:18px}.qty span{min-width:22px;text-align:center;font-weight:800;font-size:14px}
+.sum{background:#faf9fd;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:14px 0}
+.sum div{display:flex;justify-content:space-between;padding:4px 0;font-size:15px}.sum .tot{font-weight:800;font-size:18px;border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+.note{padding:12px 14px;border-radius:12px;background:#fff5dc;color:#745519;font-size:13px;line-height:1.55;margin:12px 0}
+.okBox{background:#eafaf2;color:#145c3c;border-radius:14px;padding:14px;margin:14px 0;font-size:14px}
+.payStep{border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
+.payStep h3{font-size:18px;margin-bottom:6px}.payStep p{margin:0 0 12px;font-size:14px;color:var(--muted)}
+.ref{font:800 20px Outfit,sans-serif;letter-spacing:.04em;background:var(--soft);color:var(--violetD);padding:3px 10px;border-radius:8px}
+.cartBar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:40;display:none}
+.cartBar.show{display:flex}
+/* admin */
+.studioBar{background:#ffbf6b;color:#30200c;font-size:13px;font-weight:700;padding:8px 12px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap}
+.studioBar button{border:0;background:#30200c;color:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700}
+.modal{position:fixed;inset:0;z-index:80;background:#11152b9e;display:none;align-items:flex-end;justify-content:center}
+.modal.open{display:flex}
+.mbox{background:#fff;width:100%;max-width:820px;max-height:100dvh;height:100dvh;overflow:auto;display:flex;flex-direction:column}
+.mbox.small{height:auto;max-width:400px;border-radius:22px 22px 0 0}
+.mhead{position:sticky;top:0;background:#fff;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 18px;border-bottom:1px solid var(--line);position:sticky;top:69px;background:#fff;z-index:2;scrollbar-width:none}
+.tab{flex:none;border:0;background:#f5f3ff;border-radius:10px;padding:9px 13px;font-weight:800;font-size:13px;color:#5d6176}.tab.on{background:var(--violet);color:#fff}
+.mbody{padding:18px}
+.arow{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.arow:last-child{border:0}.arow .grow{flex:1;min-width:0}.arow small{display:block;color:var(--muted);font-size:13px}
+.abtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.acard{background:#faf9fd;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+.acard h3{font-size:18px;margin-bottom:12px}
+.photoPrev{width:110px;height:110px;border-radius:14px;background:#eeeaff;display:grid;place-items:center;font-size:44px;overflow:hidden;margin-bottom:8px}.photoPrev img{width:100%;height:100%;object-fit:cover}
+.check{display:flex;gap:10px;align-items:center;font-weight:700;font-size:14px;margin-bottom:14px}.check input{width:20px;height:20px}
+.status{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:800}
+.status.live{background:#eafaf2;color:#145c3c}.status.pending{background:#fff1d6;color:#8a5a00}
+ol.how{padding-left:20px;margin:8px 0;font-size:14px;line-height:1.8}
+.toast{position:fixed;z-index:100;bottom:calc(84px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#1c213e;color:#fff;padding:12px 20px;border-radius:40px;font-size:14px;display:none;text-align:center;max-width:90vw}
+.toast.show{display:block}
+@media(min-width:720px){
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+ .steps{grid-template-columns:repeat(3,1fr)}
+ .two{grid-template-columns:1fr 1fr;gap:22px}
+ .modal{align-items:center;padding:20px}
+ .mbox{height:auto;max-height:92vh;border-radius:22px}.mbox.small{border-radius:22px}
+ .cartBar.show{display:none}
+}
+@media(min-width:900px){
+ .links{display:flex}
+ .heroGrid{grid-template-columns:1.05fr .95fr;gap:44px}
+ .hero{padding:60px 0 64px}
+ .heroArt{padding:40px}
+ .heroArt svg{width:320px}
+ section{padding:70px 0}
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+.starPick{font-size:30px;color:#e3a542;cursor:pointer;letter-spacing:4px;user-select:none}
+.tab .count{margin-left:4px;height:18px;min-width:18px;font-size:11px}
+</style>
+</head>
+<body>
+<div id="studioBar" class="studioBar hide"><span>🔧 Studio mode</span><button data-act="openAdmin">Dashboard</button><button data-act="logout">Log out</button></div>
+<div class="topbar">MADE TO ORDER IN DUBAI · PAY SECURELY WITH ZIINA</div>
+<header class="nav"><div class="wrap navin">
+ <a class="brand" href="#top">FORMA <i>3D</i> LAB</a>
+ <nav class="links"><a href="#shop">Shop</a><a href="#how">How to order</a><a href="#reviews">Reviews</a><a href="#custom">Custom prints</a></nav>
+ <button class="btn dark sm" data-act="openCart">🛍 Cart <span class="count" id="cartCount">0</span></button>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap heroGrid">
+ <div>
+  <div class="eyebrow">✦ Small objects. Big personality.</div>
+  <h1>Ideas made <em>real.</em><br>Layer by layer.</h1>
+  <p id="tagline">Thoughtfully designed, 3D-printed pieces for your desk, your space and the people you love.</p>
+  <div class="heroBtns"><a class="btn primary" href="#shop">Shop now →</a><a class="btn outline" href="#custom">Custom print</a></div>
+ </div>
+ <div class="heroArt"><svg viewBox="0 -14 300 300" style="width:min(320px,70vw);height:auto" role="img" aria-label="3D printer printing a layered vase"><style>.f3hd{animation:f3hd 2.4s ease-in-out infinite alternate}.f3gl{animation:f3gl 1.2s ease-in-out infinite alternate}.f3fl{animation:f3fl 5s ease-in-out infinite}.f3sp{transform-origin:74px 14px;animation:f3sp 9s linear infinite}.f3tw{animation:f3gl 1.8s ease-in-out infinite alternate}@keyframes f3hd{from{transform:translateX(-13px)}to{transform:translateX(13px)}}@keyframes f3gl{from{opacity:.35}to{opacity:1}}@keyframes f3fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}@keyframes f3sp{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.f3hd,.f3gl,.f3fl,.f3sp,.f3tw{animation:none}}</style><defs><linearGradient id="f3v" x1="0" x2="1"><stop offset="0" stop-color="#5a43d4"/><stop offset=".38" stop-color="#a796fb"/><stop offset=".55" stop-color="#8b74f2"/><stop offset="1" stop-color="#4c37c2"/></linearGradient><linearGradient id="f3fr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3160"/><stop offset="1" stop-color="#171b35"/></linearGradient><linearGradient id="f3bd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e4defc"/></linearGradient><pattern id="f3ln" width="6" height="4" patternUnits="userSpaceOnUse"><rect width="6" height="1.3" fill="#2a1a8a" opacity=".28"/></pattern><clipPath id="f3cv"><path d="M128 232C116 222 107 207 109 190C111 174 128 166 134 156C137 150 136 146 133 142H167C164 146 163 150 166 156C172 166 189 174 191 190C193 207 184 222 172 232Z"/></clipPath><radialGradient id="f3glw"><stop offset="0" stop-color="#ffd08a"/><stop offset="1" stop-color="#ffd08a" stop-opacity="0"/></radialGradient></defs><ellipse cx="150" cy="276" rx="118" ry="9" fill="#3a2d86" opacity=".18"/><g class="f3fl"><g class="f3sp"><circle cx="74" cy="14" r="21" fill="#ffbf6b"/><circle cx="74" cy="14" r="15" fill="#f4a64a"/><circle cx="74" cy="14" r="6" fill="#1d2140"/><rect x="72" y="-5" width="4" height="10" rx="2" fill="#fff" opacity=".55"/></g><path d="M88 26C104 48 114 66 134 82S148 104 150 112" fill="none" stroke="#ffbf6b" stroke-width="3" stroke-linecap="round"/><rect x="34" y="36" width="232" height="18" rx="9" fill="url(#f3fr)"/><rect x="42" y="36" width="18" height="228" rx="9" fill="url(#f3fr)"/><rect x="240" y="36" width="18" height="228" rx="9" fill="url(#f3fr)"/><rect x="46" y="40" width="5" height="210" rx="2.5" fill="#fff" opacity=".08"/><rect x="60" y="114" width="180" height="9" rx="4.5" fill="#3a4075"/><rect x="60" y="114" width="180" height="3" rx="1.5" fill="#fff" opacity=".12"/><g class="f3hd"><rect x="130" y="100" width="40" height="30" rx="8" fill="#fff"/><rect x="130" y="100" width="40" height="8" rx="4" fill="#ece8ff"/><circle cx="142" cy="116" r="3" fill="#7055e9"/><rect x="149" y="114" width="14" height="4" rx="2" fill="#d9d2ff"/><path d="M143 130h14l-4 8h-6z" fill="#c9c2ea"/><path d="M147 138h6l-3 5z" fill="#ffbf6b"/><circle class="f3gl" cx="150" cy="142" r="9" fill="url(#f3glw)"/></g><path d="M64 236H236L242 248H58Z" fill="url(#f3bd)"/><rect x="58" y="248" width="184" height="5" rx="2" fill="#cfc6f6"/><g clip-path="url(#f3cv)"><rect x="100" y="140" width="100" height="95" fill="url(#f3v)"/><rect x="100" y="140" width="100" height="95" fill="url(#f3ln)"/><rect x="134" y="146" width="7" height="90" rx="3.5" fill="#fff" opacity=".22"/></g><rect class="f3gl" x="133" y="140.5" width="34" height="3" rx="1.5" fill="#ffd08a"/><rect x="30" y="256" width="240" height="20" rx="10" fill="url(#f3fr)"/><rect x="48" y="261" width="34" height="10" rx="3" fill="#0f1228"/><rect class="f3tw" x="52" y="264" width="12" height="4" rx="2" fill="#9c8af5"/><circle cx="244" cy="266" r="4" fill="#7ee0b0"/></g><g fill="#fff" class="f3tw"><path d="M276 120l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/><path d="M18 180l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" opacity=".8"/></g></svg>
+</div>
+</div></div>
+
+<section id="shop"><div class="wrap">
+ <div class="head"><div class="eyebrow">The collection</div><h2>Shop the little things</h2><p>Everyday essentials, but more fun.</p></div>
+ <div id="filters" class="chips"></div>
+ <div id="products" class="grid"><div class="empty">Loading…</div></div>
+</div></section>
+
+<section id="how" style="background:#ebe7ff"><div class="wrap">
+ <div class="head"><div class="eyebrow">Easy ordering</div><h2>How it works</h2></div>
+ <div class="steps">
+  <div class="step"><div class="num">1</div><div><b>Pick your pieces</b><p>Add what you like to your cart and enter your delivery details.</p></div></div>
+  <div class="step"><div class="num">2</div><div><b>Pay with Ziina</b><p>Apple Pay, Google Pay or card. Fast and secure.</p></div></div>
+  <div class="step"><div class="num">3</div><div><b>We print &amp; deliver</b><p>Made with care in Dubai and delivered anywhere in the UAE.</p></div></div>
+ </div>
+</div></section>
+
+<section id="reviews"><div class="wrap two">
+ <div>
+  <div class="head"><div class="eyebrow">Community</div><h2>What people say 💜</h2></div>
+  <div id="reviewList"></div>
+ </div>
+ <div class="panel"><h3 style="font-size:22px;margin-bottom:14px">Leave a review ✍️</h3><form id="reviewForm">
+  <div class="field"><label for="r_name">Your name</label><input class="input" id="r_name" name="name" required maxlength="60"></div>
+  <div class="field"><label>Rating</label><div class="starPick" id="starPick">★★★★★</div><input type="hidden" name="rating" id="r_rating" value="5"></div>
+  <div class="field"><label for="r_msg">Your review</label><textarea class="input" id="r_msg" name="message" required maxlength="600"></textarea></div>
+  <button class="btn primary block">Submit review</button>
+ </form></div>
+</div></section>
+
+<section id="custom" style="background:#f1effb"><div class="wrap two">
+ <div>
+  <div class="head"><div class="eyebrow">Your idea, our printer</div><h2>Custom prints &amp; ideas</h2><p>Want a different colour, a name on it, or something totally new? Tell us.</p></div>
+  <div style="font-size:80px;line-height:1">🧩</div>
+ </div>
+ <div class="panel"><form id="contactForm">
+  <div class="field"><label for="c_name">Your name</label><input class="input" id="c_name" name="name" required maxlength="60"></div>
+  <div class="field"><label for="c_contact">Phone or email</label><input class="input" id="c_contact" name="contact" required maxlength="80"></div>
+  <div class="field"><label for="c_type">What's it about?</label><select class="input" id="c_type" name="type"><option>Custom print request</option><option>Idea for a new product</option><option>Question</option></select></div>
+  <div class="field"><label for="c_msg">Message</label><textarea class="input" id="c_msg" name="message" required maxlength="800" placeholder="Describe the object, size, colour and quantity…"></textarea></div>
+  <button class="btn primary block">Send message →</button>
+ </form></div>
+</div></section>
+</main>
+
+<footer class="footer"><div class="wrap">
+ <div class="brand">FORMA <i>3D</i> LAB</div>
+ <p>Objects with personality. Made layer by layer in Dubai, UAE.</p>
+ <p><a href="#shop">Shop</a><a href="#custom">Custom orders</a><a id="footWa" class="hide" target="_blank" rel="noopener">WhatsApp</a><a id="footMail" class="hide">Email</a></p>
+ <p style="font-size:12px;margin-top:22px">© <span id="year"></span> <span id="footName">FORMA 3D Lab</span> · <a href="#admin" class="studio" data-act="login">Studio login</a></p>
+</div></footer>
+
+<button class="btn primary cartBar" id="cartBar" data-act="openCart">🛍 View cart · <span id="cartBarTotal"></span></button>
+
+<div class="shade" id="shade" data-act="closeCart"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+ <div class="dhead"><h2 style="font-size:22px">Your cart 🛍</h2><button class="x" data-act="closeCart" aria-label="Close">✕</button></div>
+ <div class="dbody">
+  <div id="cartView">
+   <div id="cartItems"></div>
+   <form id="orderForm" class="hide">
+    <h3 style="font-size:19px;margin:20px 0 12px">Delivery details</h3>
+    <div class="field"><label for="o_name">Full name</label><input class="input" id="o_name" name="customer" required autocomplete="name"></div>
+    <div class="field"><label for="o_phone">Phone (WhatsApp)</label><input class="input" id="o_phone" name="phone" type="tel" required autocomplete="tel" placeholder="05x xxx xxxx"></div>
+    <div class="field"><label for="o_emirate">Emirate</label><select class="input" id="o_emirate" name="emirate" required><option value="">Choose…</option><option>Dubai</option><option>Sharjah</option><option>Ajman</option><option>Abu Dhabi</option><option>Al Ain</option><option>Umm Al Quwain</option><option>Ras Al Khaimah</option><option>Fujairah</option></select></div>
+    <div class="field"><label for="o_addr">Address</label><textarea class="input" id="o_addr" name="address" required autocomplete="street-address" style="min-height:76px" placeholder="Area, building, apartment / villa"></textarea></div>
+    <div class="field"><label for="o_note">Note (optional)</label><input class="input" id="o_note" name="note" placeholder="Colour choice, gift message…"></div>
+    <div class="sum" id="orderSum"></div>
+    <button class="btn primary block" id="orderBtn" type="submit">Place order →</button>
+   </form>
+  </div>
+  <div id="doneView" class="hide"></div>
+ </div>
+</aside>
+
+<div class="modal" id="loginModal"><div class="mbox small">
+ <div class="mhead"><h2 style="font-size:20px">Studio login 🔒</h2><button class="x" data-act="closeLogin" aria-label="Close">✕</button></div>
+ <form class="mbody" id="loginForm">
+  <div class="field"><label for="pw">Password</label><input class="input" id="pw" type="password" autocomplete="current-password" required></div>
+  <button class="btn primary block">Log in</button>
+  <p class="muted" id="loginMsg" style="font-size:13px;min-height:20px"></p>
+ </form>
+</div></div>
+<div class="modal" id="adminModal"><div class="mbox">
+ <div class="mhead"><h2 style="font-size:20px">Studio dashboard</h2><button class="x" data-act="closeAdmin" aria-label="Close">✕</button></div>
+ <div class="tabs" id="adminTabs"></div>
+ <div class="mbody" id="adminBody"></div>
+</div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+'use strict';
+const CFG={url:'https://xeswkgulortbfqvusjon.supabase.co',key:'sb_publishable_VBngtNe_zH1htiLb28wNHQ_wBksX4vH',adminEmail:'sami.elissaoui5@gmail.com'};
+const sb=supabase.createClient(CFG.url,CFG.key);
+const $=id=>document.getElementById(id);
+const CART_KEY='forma3d_cart_v4';
+let S={name:'FORMA 3D Lab',tagline:'',whatsapp:'',ziina:'',email:'',ship:{dubai:15,uae:25,freeOver:0}};
+let products=[],reviews=[],isAdmin=false,cart={},filter='All',tab='orders',editing=null,editPhoto=null,A={orders:[],reviews:[],messages:[],errors:[]};
+try{cart=JSON.parse(localStorage.getItem(CART_KEY))||{}}catch{}
+let errCount=0;
+function logErr(where,err){try{console.error(where,err);if(errCount++>8)return;const msg=String((err&&(err.message||err.reason&&err.reason.message))||err||'unknown').slice(0,900);sb.from('errors').insert({source:String(where).slice(0,60),message:msg,page:(location.pathname+location.hash).slice(0,120),agent:navigator.userAgent.slice(0,200)}).then(()=>{},()=>{})}catch{}}
+window.addEventListener('error',e=>logErr('page',e.error||e.message));
+window.addEventListener('unhandledrejection',e=>logErr('promise',e.reason));
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function money(n){n=+n||0;return 'AED '+(Math.round(n*100)%100?n.toFixed(2):String(Math.round(n)))}
+function toast(s){const t=$('toast');t.textContent=s;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),3500)}
+function saveCart(){try{localStorage.setItem(CART_KEY,JSON.stringify(cart))}catch{}}
+function when(d){return new Date(d).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}
+function waNum(v){let n=String(v||'').replace(/\D/g,'');if(n.startsWith('00'))n=n.slice(2);if(n.startsWith('0'))n='971'+n.slice(1);return n.length>=9?n:''}
+function waLink(num,text){const n=waNum(num);return n?`https://wa.me/${n}${text?'?text='+encodeURIComponent(text):''}`:''}
+function ziinaUrl(){let v=String(S.ziina||'').trim();if(!v)return '';if(!/^https?:\/\//i.test(v)){v=v.replace(/^@/,'').replace(/^(www\.)?(pay\.)?ziina\.com\//i,'').replace(/\/$/,'');return /^[\w.-]+$/.test(v)?'https://pay.ziina.com/'+v:''}try{const u=new URL(v);return u.protocol==='https:'&&/(^|\.)ziina\.com$/i.test(u.hostname)?u.href:''}catch{return ''}}
+function imgOk(u){return /^https:\/\//i.test(String(u||''))?u:''}
+
+async function loadShop(){
+ const [s,p,r]=await Promise.all([sb.from('settings').select('data').eq('id',1).maybeSingle(),sb.from('products').select('*').order('sort').order('created_at'),sb.from('reviews').select('name,rating,message,approved,created_at').eq('approved',true).order('created_at',{ascending:false}).limit(40)]);
+ if(s.data)S={...S,...s.data.data,ship:{...S.ship,...(s.data.data.ship||{})}};
+ products=p.data||[];reviews=r.data||[];render();
+}
+function render(){
+ document.title=`${S.name} — Objects with personality`;$('year').textContent=new Date().getFullYear();$('footName').textContent=S.name;
+ if(S.tagline)$('tagline').textContent=S.tagline;
+ const wa=waLink(S.whatsapp,'Hi! I have a question about your 3D prints.');$('footWa').classList.toggle('hide',!wa);if(wa)$('footWa').href=wa;
+ $('footMail').classList.toggle('hide',!S.email);if(S.email)$('footMail').href='mailto:'+S.email;
+ const cats=['All',...new Set(products.map(p=>p.category).filter(Boolean))];if(!cats.includes(filter))filter='All';
+ $('filters').innerHTML=cats.length>2?cats.map(c=>`<button class="chip ${c===filter?'on':''}" data-act="filter" data-v="${esc(c)}">${esc(c)}</button>`).join(''):'';
+ const list=products.filter(p=>filter==='All'||p.category===filter);
+ $('products').innerHTML=list.length?list.map(p=>`<article class="card"><div class="pimg">${imgOk(p.image)?`<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">`:`<span class="emo">${esc(p.emoji)}</span>`}${p.badge?`<span class="badge">${esc(p.badge)}</span>`:''}</div><div class="pbody"><h3>${esc(p.name)}</h3>${p.description?`<p>${esc(p.description)}</p>`:''}<div class="price">${money(p.price)}</div><button class="btn ${p.sold_out?'outline':'primary'} sm block" data-act="add" data-id="${esc(p.id)}" ${p.sold_out?'disabled':''}>${p.sold_out?'Sold out':'＋ Add to cart'}</button></div></article>`).join(''):`<div class="empty">New pieces are on the way ✨<br>Check back soon, or <a href="#custom" style="color:var(--violet);font-weight:700">request a custom print</a>.</div>`;
+ $('reviewList').innerHTML=reviews.map(r=>`<div class="quote"><div class="stars">${'★'.repeat(r.rating)}</div><p>${esc(r.message)}</p><small class="muted">— ${esc(r.name)}</small></div>`).join('')||'<p class="muted">Be the first to leave a review!</p>';
+ renderCart();
+}
+const byId=id=>products.find(p=>p.id===id);
+function cartLines(){return Object.entries(cart).map(([id,q])=>({p:byId(id),qty:+q})).filter(x=>x.p&&!x.p.sold_out&&x.qty>0)}
+function totals(em){const lines=cartLines(),sub=lines.reduce((s,x)=>s+x.qty*x.p.price,0);let ship=null;if(em&&lines.length){const s=S.ship;ship=(+s.freeOver>0&&sub>=+s.freeOver)?0:(em==='Dubai'?+s.dubai:+s.uae)}return{lines,sub,ship,total:sub+(ship||0)}}
+function renderCart(){
+ const t=totals($('o_emirate').value),n=t.lines.reduce((s,x)=>s+x.qty,0);
+ $('cartCount').textContent=n;$('cartBar').classList.toggle('show',n>0&&!$('drawer').classList.contains('open'));$('cartBarTotal').textContent=money(t.sub);
+ $('cartItems').innerHTML=t.lines.length?t.lines.map(({p,qty})=>`<div class="line"><div class="thumb">${imgOk(p.image)?`<img src="${esc(p.image)}" alt="">`:esc(p.emoji)}</div><div style="flex:1;min-width:0"><b>${esc(p.name)}</b><div class="muted" style="font-size:13px">${money(p.price)} each</div><div class="qty"><button data-act="qty" data-id="${esc(p.id)}" data-d="-1" aria-label="Less">−</button><span>${qty}</span><button data-act="qty" data-id="${esc(p.id)}" data-d="1" aria-label="More">+</button></div></div><b>${money(qty*p.price)}</b></div>`).join(''):'<div class="empty" style="margin-top:20px"><div style="font-size:48px">🛍️</div>Your cart is empty.</div>';
+ $('orderForm').classList.toggle('hide',!t.lines.length);
+ const s=S.ship;
+ $('orderSum').innerHTML=`<div><span>Subtotal</span><b>${money(t.sub)}</b></div><div><span>Delivery</span><b>${t.ship===null?'<span class="muted" style="font-weight:500">choose emirate</span>':t.ship===0?'FREE':money(t.ship)}</b></div>${+s.freeOver>0?`<div class="muted" style="font-size:13px">Free delivery over ${money(s.freeOver)}</div>`:''}<div class="tot"><span>Total</span><span>${money(t.total)}</span></div>`;
+ $('orderBtn').textContent=ziinaUrl()?'Place order & pay with Ziina →':'Place order →';
+}
+function lock(on){document.body.classList.toggle('locked',on)}
+function openCart(){$('drawer').classList.add('open');$('shade').classList.add('open');lock(true);renderCart()}
+function closeCart(){$('drawer').classList.remove('open');$('shade').classList.remove('open');lock(false);$('cartView').classList.remove('hide');$('doneView').classList.add('hide');renderCart()}
+$('orderForm').addEventListener('input',renderCart);$('orderForm').addEventListener('change',renderCart);
+$('orderForm').addEventListener('submit',async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));const t=totals(f.emirate);if(!t.lines.length)return;
+ const btn=$('orderBtn');btn.disabled=true;btn.textContent='Sending…';
+ const {data,error}=await sb.rpc('place_order',{o:{...f,items:t.lines.map(x=>({id:x.p.id,qty:x.qty}))}});
+ btn.disabled=false;renderCart();
+ if(error){logErr('checkout',error);await loadShop();return toast(error.message.includes('available')?'Something in your cart sold out. Please check your cart.':'Could not place your order. Please try again.')}
+ cart={};saveCart();e.target.reset();showDone(data,f);
+});
+function showDone(o,f){const z=ziinaUrl();const items=o.items.map(i=>`• ${i.qty} × ${i.name}`).join('\n');
+ const wa=waLink(S.whatsapp,`Hi! I just placed order ${o.ref} (${money(o.total)}).\n${items}\nName: ${f.customer}`);
+ $('doneView').innerHTML=`<div style="text-align:center;padding:18px 0 4px"><div style="font-size:54px">🎉</div><h2 style="font-size:26px;margin:6px 0">Order received!</h2><p class="muted" style="margin:6px 0">Your order number</p><span class="ref">${esc(o.ref)}</span></div>
+ <div class="sum"><div><span>Subtotal</span><b>${money(o.subtotal)}</b></div><div><span>Delivery</span><b>${+o.shipping?money(o.shipping):'FREE'}</b></div><div class="tot"><span>Total</span><span>${money(o.total)}</span></div></div>
+ ${z?`<div class="payStep"><h3>Pay ${money(o.total)} with Ziina</h3><p>Enter <b>${money(o.total)}</b> and write <b>${esc(o.ref)}</b> in the note. We start printing once payment arrives.</p><a class="btn primary block" href="${esc(z)}" target="_blank" rel="noopener">Pay with Ziina ↗</a><div class="row2" style="margin-top:8px"><button class="btn soft sm" data-act="copy" data-v="${(+o.total).toFixed(2)}">Copy amount</button><button class="btn soft sm" data-act="copy" data-v="${esc(o.ref)}">Copy order no.</button></div></div>`:`<div class="payStep"><h3>Payment</h3><p>We'll message you with a payment link shortly.</p></div>`}
+ ${wa?`<a class="btn outline block" href="${esc(wa)}" target="_blank" rel="noopener">💬 Message us on WhatsApp</a>`:''}
+ <button class="btn outline block" data-act="closeCart" style="margin-top:8px">Back to shop</button>`;
+ $('cartView').classList.add('hide');$('doneView').classList.remove('hide');renderCart();
+}
+$('starPick').addEventListener('click',e=>{const r=$('starPick').getBoundingClientRect();const n=Math.min(5,Math.max(1,Math.ceil((e.clientX-r.left)/(r.width/5))));$('r_rating').value=n;$('starPick').innerHTML='★'.repeat(n)+'<span style="color:#d9d6e4">'+'★'.repeat(5-n)+'</span>'});
+$('reviewForm').addEventListener('submit',async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+ const {error}=await sb.from('reviews').insert({name:f.name.trim(),rating:+f.rating,message:f.message.trim()});
+ if(error){logErr('review',error);return toast('Could not send your review. Please try again.')}e.target.reset();$('r_rating').value=5;$('starPick').textContent='★★★★★';toast('Thank you! Your review will appear once approved 💜')});
+$('contactForm').addEventListener('submit',async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+ const {error}=await sb.from('messages').insert(f);if(error){logErr('message',error);return toast('Could not send. Please try again.')}e.target.reset();toast('Message sent! We\'ll get back to you soon 💜')});
+
+
+function openLogin(){if(isAdmin)return openAdmin();$('loginModal').classList.add('open');$('loginMsg').textContent='';setTimeout(()=>$('pw').focus(),50)}
+$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMsg').textContent='Checking…';const {error}=await sb.auth.signInWithPassword({email:CFG.adminEmail,password:$('pw').value});$('pw').value='';
+ if(error){$('loginMsg').textContent='Wrong password.';return}$('loginModal').classList.remove('open');setAdmin(true);openAdmin()});
+function setAdmin(on){isAdmin=on;$('studioBar').classList.toggle('hide',!on)}
+async function openAdmin(){if(!isAdmin)return openLogin();$('adminModal').classList.add('open');lock(true);await loadAdmin();renderAdmin()}
+function closeAdmin(){$('adminModal').classList.remove('open');lock(false);if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search)}
+async function logout(){await sb.auth.signOut();setAdmin(false);closeAdmin();toast('Logged out')}
+async function loadAdmin(){const [o,r,m,x]=await Promise.all([sb.from('orders').select('*').order('created_at',{ascending:false}).limit(150),sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(150),sb.from('messages').select('*').order('created_at',{ascending:false}).limit(150),sb.from('errors').select('*').order('created_at',{ascending:false}).limit(100)]);
+ [o,r,m].forEach((q,i)=>q.error&&logErr('admin load '+i,q.error));
+ A={orders:o.data||[],reviews:r.data||[],messages:m.data||[],errors:x.data||[]}}
+const STATUSES=[['new','🆕 New'],['paid','💰 Paid'],['printing','🖨 Printing'],['shipped','🚚 Sent'],['done','✅ Done'],['cancelled','✖ Cancelled']];
+function renderAdmin(){
+ const nNew=A.orders.filter(o=>o.status==='new').length,nRev=A.reviews.filter(r=>!r.approved).length,nMsg=A.messages.filter(m=>!m.done).length;
+ const tabs=[['orders','🧾 Orders',nNew],['products','📦 Products',0],['reviews','💬 Reviews',nRev],['messages','✉️ Messages',nMsg],['settings','⚙️ Settings',0],['errors','🐞 Errors',A.errors.length]];
+ $('adminTabs').innerHTML=tabs.map(([k,v,n])=>`<button class="tab ${tab===k?'on':''}" data-act="tab" data-v="${k}">${v}${n?` <span class="count">${n}</span>`:''}</button>`).join('');
+ $('adminBody').innerHTML=view();
+}
+function view(){
+ if(tab==='errors')return (A.errors.length?'<button class="btn danger sm" data-act="clearErrors" style="margin-bottom:12px">Clear all</button>':'')+(A.errors.map(x=>`<div class="arow"><div class="grow"><b style="color:#b3261e">${esc(x.source)}</b> <span class="muted" style="font-size:13px">${when(x.created_at)}</span><small style="white-space:pre-wrap;word-break:break-word">${esc(x.message)}</small><small>${esc(x.page)} · ${esc((x.agent||'').replace(/^Mozilla\/5\.0 /,'').slice(0,70))}</small></div></div>`).join('')||'<p class="muted">✅ No errors. Problems on the site (failed orders, broken pages) show up here automatically.</p>');
+ if(tab==='orders')return checklist()+A.orders.map(o=>`<div class="acard"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><b style="font:800 18px Outfit">${esc(o.ref)}</b> <span class="muted" style="font-size:13px">${when(o.created_at)}</span><div style="font-weight:800">${money(o.total)} <span class="muted" style="font-weight:500;font-size:13px">(${money(o.subtotal)} + ${money(o.shipping)} delivery)</span></div></div><select class="input" style="width:auto;min-height:38px;padding:6px 10px;font-size:14px" data-chg="status" data-id="${o.id}">${STATUSES.map(([k,v])=>`<option value="${k}" ${o.status===k?'selected':''}>${v}</option>`).join('')}</select></div>
+  <div style="font-size:14px;margin:10px 0">${(o.items||[]).map(i=>`${i.qty} × ${esc(i.name)}`).join('<br>')}</div>
+  <div class="muted" style="font-size:14px">${esc(o.customer)} · ${esc(o.phone)}<br>${esc(o.address)}, ${esc(o.emirate)}${o.note?`<br>📝 ${esc(o.note)}`:''}</div>
+  <div class="abtns" style="justify-content:flex-start;margin-top:10px">${waNum(o.phone)?`<a class="btn soft sm" target="_blank" rel="noopener" href="${esc(waLink(o.phone,`Hi ${o.customer}! About your FORMA 3D order ${o.ref} (${money(o.total)}).`))}">💬 WhatsApp customer</a>`:''}<button class="btn danger sm" data-act="delRow" data-t="orders" data-id="${o.id}">Delete</button></div></div>`).join('')||'<p class="muted">No orders yet. New orders show up here instantly.</p><div class="note">Check each Ziina payment in the Ziina app (amount + order number) before printing, then set the order to 💰 Paid.</div>';
+ if(tab==='products'){if(editing)return editor();
+  return `<button class="btn primary block" data-act="newProduct" style="margin-bottom:14px">＋ Add a product</button><div class="acard">${products.map((p,i)=>`<div class="arow"><div class="thumb">${imgOk(p.image)?`<img src="${esc(p.image)}" alt="">`:esc(p.emoji)}</div><div class="grow"><b>${esc(p.name)}</b><small>${money(p.price)}${p.category?' · '+esc(p.category):''}${p.sold_out?' · <b style="color:#b3261e">Sold out</b>':''}</small></div><div class="abtns">${i>0?`<button class="btn outline sm" data-act="moveUp" data-i="${i}" aria-label="Move up">↑</button>`:''}<button class="btn outline sm" data-act="soldToggle" data-id="${p.id}">${p.sold_out?'In stock':'Sold out'}</button><button class="btn outline sm" data-act="editProduct" data-id="${p.id}">Edit</button></div></div>`).join('')||'<p class="muted" style="margin:0">No products yet.</p>'}</div>`}
+ if(tab==='reviews')return A.reviews.map(r=>`<div class="arow"><div class="grow"><b>${esc(r.name)} <span class="stars">${'★'.repeat(r.rating)}</span></b><small>${esc(r.message)}</small><small>${when(r.created_at)} · ${r.approved?'✅ Showing on site':'⏳ Waiting for approval'}</small></div><div class="abtns"><button class="btn ${r.approved?'outline':'primary'} sm" data-act="approve" data-id="${r.id}">${r.approved?'Hide':'Approve'}</button><button class="btn danger sm" data-act="delRow" data-t="reviews" data-id="${r.id}">Delete</button></div></div>`).join('')||'<p class="muted">No reviews yet.</p>';
+ if(tab==='messages')return A.messages.map(m=>`<div class="acard" style="${m.done?'opacity:.55':''}"><b>${esc(m.type)}</b> <span class="muted" style="font-size:13px">${when(m.created_at)}</span><p style="margin:6px 0;white-space:pre-wrap">${esc(m.message)}</p><div class="muted" style="font-size:14px">${esc(m.name)} · ${esc(m.contact)}</div><div class="abtns" style="justify-content:flex-start;margin-top:10px">${waNum(m.contact)?`<a class="btn soft sm" target="_blank" rel="noopener" href="${esc(waLink(m.contact,'Hi '+m.name+'! Thanks for your message to FORMA 3D Lab.'))}">💬 Reply</a>`:/@/.test(m.contact)?`<a class="btn soft sm" href="mailto:${esc(m.contact)}">✉️ Reply</a>`:''}<button class="btn outline sm" data-act="msgDone" data-id="${m.id}">${m.done?'Mark new':'Mark done'}</button><button class="btn danger sm" data-act="delRow" data-t="messages" data-id="${m.id}">Delete</button></div></div>`).join('')||'<p class="muted">No messages yet.</p>';
+ if(tab==='settings'){const s=S.ship;return `<form id="settingsForm">
+  <div class="acard"><h3>💳 Ziina</h3><div class="field"><label>Your Ziina payment link</label><input class="input" name="ziina" value="${esc(S.ziina)}" placeholder="pay.ziina.com/yourbusiness"><small>Ziina app → Get paid → copy your link.</small></div>${ziinaUrl()?`<a class="btn soft sm" href="${esc(ziinaUrl())}" target="_blank" rel="noopener">Test link ↗</a>`:''}</div>
+  <div class="acard"><h3>📞 Contact</h3><div class="field"><label>WhatsApp number</label><input class="input" name="whatsapp" type="tel" value="${esc(S.whatsapp)}" placeholder="050 123 4567"></div><div class="field"><label>Email (optional)</label><input class="input" name="email" type="email" value="${esc(S.email)}"></div></div>
+  <div class="acard"><h3>🚚 Delivery (AED)</h3><div class="row2"><div class="field"><label>Dubai</label><input class="input" name="dubai" type="number" min="0" step="0.5" value="${esc(s.dubai)}" required></div><div class="field"><label>Other emirates</label><input class="input" name="uae" type="number" min="0" step="0.5" value="${esc(s.uae)}" required></div></div><div class="field"><label>Free delivery over (0 = off)</label><input class="input" name="freeOver" type="number" min="0" step="1" value="${esc(s.freeOver)}"></div></div>
+  <div class="acard"><h3>🏷 Shop</h3><div class="field"><label>Shop name</label><input class="input" name="name" value="${esc(S.name)}" required></div><div class="field"><label>Text under the headline</label><textarea class="input" name="tagline" style="min-height:70px">${esc(S.tagline)}</textarea></div></div>
+  <button class="btn primary block">Save settings</button></form>
+  <form id="pwForm" class="acard" style="margin-top:14px"><h3>🔒 Change password</h3><div class="row2"><div class="field"><label>New password</label><input class="input" name="pw1" type="password" autocomplete="new-password" required minlength="6"></div><div class="field"><label>Repeat</label><input class="input" name="pw2" type="password" autocomplete="new-password" required minlength="6"></div></div><button class="btn outline block">Change password</button></form>`}
+ return ''}
+function checklist(){const z=!!ziinaUrl(),w=!!waNum(S.whatsapp),p=products.length>0;if(z&&w&&p)return '';
+ const it=(ok,t)=>`<div style="padding:4px 0">${ok?'✅':'⬜'} ${t}</div>`;
+ return `<div class="acard" style="border-color:#c9bdfc;background:#f6f3ff"><h3>🚀 Finish setup</h3>${it(z,'Connect Ziina')}${it(w,'Add your WhatsApp')}${it(p,'Add your first product')}
+ ${z?'':`<form id="ziinaQuick" style="margin-top:12px"><div class="field"><label>Your Ziina payment link</label><input class="input" name="ziina" placeholder="pay.ziina.com/yourname" required><small>Open the Ziina app → <b>Get paid</b> → tap <b>Share</b> → <b>Copy link</b>, then paste it here.</small></div><button class="btn primary block">Connect Ziina</button></form>`}
+ ${!w&&z?`<form id="waQuick" style="margin-top:12px"><div class="field"><label>Your WhatsApp number</label><input class="input" name="whatsapp" type="tel" placeholder="050 123 4567" required></div><button class="btn primary block">Save</button></form>`:''}
+ ${z&&w&&!p?'<button class="btn primary block" data-act="goProducts" style="margin-top:12px">＋ Add your first product</button>':''}</div>`}
+async function saveSettings(patch){const d={...S,...patch};const {error}=await sb.from('settings').update({data:d}).eq('id',1);if(error){logErr('settings',error);toast('Could not save');return false}toast('Saved, live now ✔');await refresh();return true}
+function editor(){const p=editing,isNew=!p.id;const ph=editPhoto!==null?editPhoto:imgOk(p.image);return `<form id="productForm" class="acard"><h3>${isNew?'New product':'Edit product'}</h3>
+ <div class="field"><label>Photo</label><div class="photoPrev">${ph?`<img src="${esc(ph)}" alt="">`:esc(p.emoji)}</div><div class="row2"><label class="btn soft sm" style="cursor:pointer">📷 ${ph?'Change':'Add photo'}<input type="file" accept="image/*" id="photoInput" hidden></label>${ph?'<button type="button" class="btn outline sm" data-act="removePhoto">Remove</button>':''}</div></div>
+ <div class="field"><label>Name</label><input class="input" name="name" required value="${esc(p.name)}" maxlength="60"></div>
+ <div class="row2"><div class="field"><label>Price (AED)</label><input class="input" name="price" type="number" min="0" step="0.5" required value="${esc(p.price)}" inputmode="decimal"></div><div class="field"><label>Category</label><input class="input" name="category" value="${esc(p.category)}" placeholder="Fidgets…"></div></div>
+ <div class="field"><label>Description</label><textarea class="input" name="description" maxlength="220" style="min-height:76px">${esc(p.description)}</textarea></div>
+ <div class="row2"><div class="field"><label>Emoji (no photo)</label><input class="input" name="emoji" value="${esc(p.emoji)}" maxlength="4"></div><div class="field"><label>Badge</label><input class="input" name="badge" value="${esc(p.badge)}" placeholder="NEW" maxlength="14"></div></div>
+ <label class="check"><input type="checkbox" name="sold_out" ${p.sold_out?'checked':''}> Sold out</label>
+ <button class="btn primary block" id="saveProdBtn">Save product</button>
+ <div class="row2" style="margin-top:10px"><button type="button" class="btn outline sm" data-act="cancelEdit">Cancel</button>${isNew?'':`<button type="button" class="btn danger sm" data-act="delProduct" data-id="${p.id}">Delete</button>`}</div></form>`}
+function keepEditor(){const f=$('productForm');if(!f)return;const v=Object.fromEntries(new FormData(f));Object.assign(editing,{name:v.name,price:v.price,category:v.category,description:v.description,emoji:v.emoji,badge:v.badge,sold_out:!!v.sold_out})}
+function readPhoto(file){return new Promise((res,rej)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{const s=Math.min(1,1000/Math.max(img.width,img.height)),w=Math.round(img.width*s),h=Math.round(img.height*s),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);URL.revokeObjectURL(url);res(c.toDataURL('image/jpeg',.85))};img.onerror=()=>{URL.revokeObjectURL(url);rej()};img.src=url})}
+async function uploadPhoto(dataUrl){const blob=await (await fetch(dataUrl)).blob();const path=`p/${Date.now()}-${Math.random().toString(36).slice(2,7)}.jpg`;const {error}=await sb.storage.from('photos').upload(path,blob,{contentType:'image/jpeg',cacheControl:'31536000'});if(error)throw error;return sb.storage.from('photos').getPublicUrl(path).data.publicUrl}
+async function refresh(){await loadShop();await loadAdmin();renderAdmin()}
+document.addEventListener('change',async e=>{
+ if(e.target.id==='photoInput'&&e.target.files[0]){try{keepEditor();editPhoto=await readPhoto(e.target.files[0]);renderAdmin()}catch{toast('Could not read that photo. Try a JPG or PNG.')}}
+ if(e.target.dataset.chg==='status'){const {error}=await sb.from('orders').update({status:e.target.value}).eq('id',e.target.dataset.id);toast(error?'Could not update':'Order updated ✔');await loadAdmin();renderAdmin()}
+});
+document.addEventListener('submit',async e=>{
+ if(e.target.id==='productForm'){e.preventDefault();keepEditor();const b=$('saveProdBtn');b.disabled=true;b.textContent='Saving…';
+  try{let image=editing.image||'';if(editPhoto!==null)image=editPhoto?await uploadPhoto(editPhoto):'';
+   const row={name:editing.name.trim(),price:Math.max(0,+editing.price||0),category:(editing.category||'').trim(),description:(editing.description||'').trim(),emoji:editing.emoji||'🧩',badge:editing.badge||'',sold_out:!!editing.sold_out,image};
+   const q=editing.id?sb.from('products').update(row).eq('id',editing.id):sb.from('products').insert({...row,sort:products.length});const {error}=await q;if(error)throw error;
+   editing=null;editPhoto=null;toast('Saved, live now ✔');await refresh()}catch(err){logErr('product save',err);toast('Could not save: '+(err.message||'error'));b.disabled=false;b.textContent='Save product'}}
+ if(e.target.id==='settingsForm'){e.preventDefault();const f=Object.fromEntries(new FormData(e.target));
+  const d={name:f.name.trim()||'FORMA 3D Lab',tagline:f.tagline.trim(),ziina:f.ziina.trim(),whatsapp:f.whatsapp.trim(),email:f.email.trim(),ship:{dubai:Math.max(0,+f.dubai||0),uae:Math.max(0,+f.uae||0),freeOver:Math.max(0,+f.freeOver||0)}};
+  if(d.ziina&&!(S.ziina=d.ziina,ziinaUrl()))return toast('That is not a Ziina link (pay.ziina.com/…)');
+  const {error}=await sb.from('settings').update({data:d}).eq('id',1);toast(error?'Could not save':'Settings saved, live now ✔');await refresh()}
+ if(e.target.id==='ziinaQuick'){e.preventDefault();const v=new FormData(e.target).get('ziina').trim();const old=S.ziina;S.ziina=v;const ok=ziinaUrl();S.ziina=old;if(!ok)return toast('That is not a Ziina link. It should look like pay.ziina.com/yourname');await saveSettings({ziina:v})}
+ if(e.target.id==='waQuick'){e.preventDefault();const v=new FormData(e.target).get('whatsapp').trim();if(!waNum(v))return toast('Enter a valid phone number');await saveSettings({whatsapp:v})}
+ if(e.target.id==='pwForm'){e.preventDefault();const f=Object.fromEntries(new FormData(e.target));if(f.pw1!==f.pw2)return toast('Passwords don\'t match');const {error}=await sb.auth.updateUser({password:f.pw1});toast(error?'Could not change password':'Password changed ✔');if(!error)e.target.reset()}
+});
+document.addEventListener('click',async e=>{const el=e.target.closest('[data-act]');if(!el)return;const a=el.dataset.act,id=el.dataset.id;
+ switch(a){
+  case 'openCart':openCart();break;case 'closeCart':closeCart();break;
+  case 'filter':filter=el.dataset.v;render();break;
+  case 'add':{const p=byId(id);if(!p||p.sold_out)return;cart[id]=(cart[id]||0)+1;saveCart();renderCart();toast(`${p.name} added to cart`);break}
+  case 'qty':cart[id]=Math.max(0,Math.min(99,(cart[id]||0)+(+el.dataset.d)));if(!cart[id])delete cart[id];saveCart();renderCart();break;
+  case 'copy':try{await navigator.clipboard.writeText(el.dataset.v);toast('Copied: '+el.dataset.v)}catch{toast(el.dataset.v)}break;
+  case 'login':e.preventDefault();openLogin();break;case 'closeLogin':$('loginModal').classList.remove('open');break;
+  case 'openAdmin':openAdmin();break;case 'closeAdmin':closeAdmin();break;case 'logout':logout();break;
+  case 'tab':tab=el.dataset.v;editing=null;editPhoto=null;renderAdmin();$('adminModal').querySelector('.mbox').scrollTop=0;break;
+  case 'newProduct':editing={name:'',price:25,category:'',description:'',emoji:'🧩',badge:'',sold_out:false,image:''};editPhoto=null;renderAdmin();break;
+  case 'editProduct':editing={...byId(id)};editPhoto=null;renderAdmin();break;
+  case 'cancelEdit':editing=null;editPhoto=null;renderAdmin();break;
+  case 'removePhoto':keepEditor();editPhoto='';renderAdmin();break;
+  case 'delProduct':if(confirm('Delete this product?')){await sb.from('products').delete().eq('id',id);editing=null;toast('Deleted');await refresh()}break;
+  case 'soldToggle':{const p=byId(id);await sb.from('products').update({sold_out:!p.sold_out}).eq('id',id);await refresh();break}
+  case 'moveUp':{const i=+el.dataset.i,list=products.slice();[list[i-1],list[i]]=[list[i],list[i-1]];await Promise.all(list.map((p,k)=>sb.from('products').update({sort:k}).eq('id',p.id)));await refresh();break}
+  case 'approve':{const r=A.reviews.find(x=>x.id===id);await sb.from('reviews').update({approved:!r.approved}).eq('id',id);toast(r.approved?'Hidden':'Approved, live now ✔');await refresh();break}
+  case 'msgDone':{const m=A.messages.find(x=>x.id===id);await sb.from('messages').update({done:!m.done}).eq('id',id);await loadAdmin();renderAdmin();break}
+  case 'goProducts':tab='products';editing={name:'',price:25,category:'',description:'',emoji:'🧩',badge:'',sold_out:false,image:''};editPhoto=null;renderAdmin();break;
+  case 'clearErrors':if(confirm('Clear all errors?')){await sb.from('errors').delete().not('id','is',null);await loadAdmin();renderAdmin()}break;
+  case 'delRow':if(confirm('Delete this?')){await sb.from(el.dataset.t).delete().eq('id',id);toast('Deleted');await refresh()}break;
+ }});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeAdmin();$('loginModal').classList.remove('open')}});
+window.addEventListener('hashchange',()=>{if(location.hash==='#admin')openLogin()});
+(async()=>{const {data}=await sb.auth.getSession();if(data.session)setAdmin(true);await loadShop().catch(err=>{logErr('load shop',err);$('products').innerHTML='<div class="empty">Could not load the shop. Please refresh.</div>'});if(location.hash==='#admin')openLogin()})();
+</script>
+</body>
+</html>
