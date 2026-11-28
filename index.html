@@ -106,6 +106,7 @@ textarea.input{min-height:96px;resize:vertical}
 .arow{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .arow:last-child{border:0}.arow .grow{flex:1;min-width:0}.arow small{display:block;color:var(--muted);font-size:13px}
 .abtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.wipbar{background:#fff4cc;color:#5c4400;border-bottom:1px solid #f0d77a;font-size:13px;line-height:1.4;text-align:center;padding:8px 14px}
 .catBox{padding:10px 14px!important;margin-bottom:12px}.catHead{display:flex;align-items:center;gap:8px;padding:2px 0 8px;border-bottom:1px solid var(--line)}.catHead b{flex:1;min-width:0}.catList{min-height:46px}.catList:empty::after{content:'Drag products here';display:block;color:var(--muted);font-size:13px;padding:14px 0;text-align:center}.dh,.ch{cursor:grab;font-size:20px;color:#8b8fa6;padding:6px;touch-action:none;user-select:none;-webkit-user-select:none}.sortable-ghost{opacity:.35}.sortable-chosen{background:#f4f1ff}
 .acard{background:#faf9fd;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
 .acard h3{font-size:18px;margin-bottom:12px}
@@ -143,6 +144,7 @@ ol.how{padding-left:20px;margin:8px 0;font-size:14px;line-height:1.8}
 </head>
 <body>
 <div id="studioBar" class="studioBar hide"><span>🔧 Studio mode</span><button data-act="openAdmin">Dashboard</button><button data-act="logout">Log out</button></div>
+<div class="wipbar" role="note">🚧 <b>Work in progress:</b> this website is still being built, so some things may change or not work perfectly yet. Questions? Message us before ordering.</div>
 <div class="topbar">MADE TO ORDER IN DUBAI · PAY SECURELY WITH ZIINA</div>
 <header class="nav"><div class="wrap navin">
  <div style="display:flex;align-items:center;gap:8px"><button class="btn soft sm" data-act="openTrack" aria-label="My orders">👤 My orders</button><a class="brand" href="#top">FORMA<i>3D</i></a></div>
@@ -209,6 +211,7 @@ ol.how{padding-left:20px;margin:8px 0;font-size:14px;line-height:1.8}
 <footer class="footer"><div class="wrap">
  <div class="brand">FORMA<i>3D</i></div>
  <p>Objects with personality. Made layer by layer in Dubai, UAE.</p>
+ <p style="font-size:13px">🚧 This site is a work in progress. Features and prices may change.</p>
  <p><a href="#shop">Shop</a><a href="#custom">Custom orders</a><a href="#track" data-act="openTrack">Track order</a><a href="#donate" data-act="openDonate">💜 Donate</a><a id="footWa" class="hide" target="_blank" rel="noopener">WhatsApp</a><a id="footMail" class="hide">Email</a></p>
  <p style="font-size:12px;margin-top:22px">© <span id="year"></span> <span id="footName">FORMA3D</span> · <a href="#admin" class="studio" data-act="login">Studio login</a></p>
 </div></footer>
